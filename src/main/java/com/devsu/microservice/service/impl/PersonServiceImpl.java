@@ -16,19 +16,9 @@ public class PersonServiceImpl implements PersonService {
 	@Autowired
 	private PersonRepository personRepository;
 	private PersonMapper personMapper;
-	
-
 
 	@Override
 	public ResponseMessage create(PersonDto personDto){
-		System.out.println(personDto.getIdentification());
-		System.out.println(personDto.getAddress());
-		System.out.println(personDto.getGender());
-		System.out.println(personDto.getName());
-		System.out.println(personDto.getPhone());
-		System.out.println(personDto.getAge());
-
-
 		personRepository.save(personMapper.personDtoToPerson(personDto));
 		return (new ResponseMessage(Constants.PERSON_CREATE));
 	}

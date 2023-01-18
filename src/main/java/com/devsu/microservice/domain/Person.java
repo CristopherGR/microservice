@@ -1,5 +1,7 @@
 package com.devsu.microservice.domain;
 
+import com.devsu.microservice.service.dto.PersonDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -20,15 +22,15 @@ public class Person {
 	private String address;
 	
 	private String phone;
-
-	public Person(String identification, String name, String gender, Long age, String address, String phone) {
+	
+	public Person(PersonDto personDto) {
 		super();
-		this.identification = identification;
-		this.name = name;
-		this.gender = gender;
-		this.age = age;
-		this.address = address;
-		this.phone = phone;
+		this.identification = personDto.getIdentification();
+		this.name = personDto.getName();
+		this.gender = personDto.getGender();
+		this.age = personDto.getAge();
+		this.address = personDto.getAddress();
+		this.phone = personDto.getPhone();
 	}
 
 	public String getIdentification() {
@@ -78,13 +80,5 @@ public class Person {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 }

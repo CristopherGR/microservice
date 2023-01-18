@@ -1,8 +1,5 @@
 package com.devsu.microservice.service.dto;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class PersonDto {
 
 	private String identification;
@@ -16,6 +13,16 @@ public class PersonDto {
 	private String address;
 	
 	private String phone;
+
+	public PersonDto(String identification, String name, String gender, Long age, String address, String phone) {
+		super();
+		this.identification = identification;
+		this.name = name;
+		this.gender = gender;
+		this.age = age;
+		this.address = address;
+		this.phone = phone;
+	}
 
 	public String getIdentification() {
 		return identification;
@@ -64,7 +71,6 @@ public class PersonDto {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
 	
 	
 }
