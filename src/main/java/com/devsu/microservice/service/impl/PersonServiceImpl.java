@@ -16,6 +16,15 @@ public class PersonServiceImpl implements PersonService {
 	@Autowired
 	private PersonRepository personRepository;
 	private PersonMapper personMapper;
+	
+	
+
+	public PersonServiceImpl() {
+		super();
+		this.personMapper = new PersonMapper();
+	}
+
+
 
 	@Override
 	public ResponseMessage create(PersonDto personDto){

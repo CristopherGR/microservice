@@ -23,14 +23,8 @@ public class Person {
 	
 	private String phone;
 	
-	public Person(PersonDto personDto) {
-		super();
-		this.identification = personDto.getIdentification();
-		this.name = personDto.getName();
-		this.gender = personDto.getGender();
-		this.age = personDto.getAge();
-		this.address = personDto.getAddress();
-		this.phone = personDto.getPhone();
+	public Person() {
+
 	}
 
 	public String getIdentification() {

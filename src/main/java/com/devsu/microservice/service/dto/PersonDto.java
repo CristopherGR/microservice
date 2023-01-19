@@ -13,17 +13,12 @@ public class PersonDto {
 	private String address;
 	
 	private String phone;
+	
 
-	public PersonDto(String identification, String name, String gender, Long age, String address, String phone) {
-		super();
-		this.identification = identification;
-		this.name = name;
-		this.gender = gender;
-		this.age = age;
-		this.address = address;
-		this.phone = phone;
+	public PersonDto() {
+		
 	}
-
+	
 	public String getIdentification() {
 		return identification;
 	}
