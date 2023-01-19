@@ -16,7 +16,7 @@ import com.devsu.microservice.utils.ResponseMessage;
 
 @RestController
 @CrossOrigin(origins="*")
-@RequestMapping("/jeje")
+@RequestMapping("/api")
 public class PersonController {
 
 	@Autowired
