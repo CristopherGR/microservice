@@ -1,7 +1,5 @@
 package com.devsu.microservice.domain;
 
-import com.devsu.microservice.service.dto.PersonDto;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
