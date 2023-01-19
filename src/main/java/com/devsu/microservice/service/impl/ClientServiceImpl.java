@@ -1,16 +1,17 @@
 package com.devsu.microservice.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.devsu.microservice.domain.Client;
+import com.devsu.microservice.exception.ClientException;
 import com.devsu.microservice.repository.ClientRepository;
 import com.devsu.microservice.service.ClientService;
 import com.devsu.microservice.service.dto.ClientDto;
 import com.devsu.microservice.service.mapper.ClientMapper;
-import com.devsu.microservice.utils.Constants;
 import com.devsu.microservice.utils.ResponseMessage;
 
 @Service
@@ -26,43 +27,50 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public ResponseMessage create(ClientDto clientDto) {
-		Client client = clientMapper.clientDtoToClient(clientDto);
-		Optional<Client> clientTemp = clientRepository.findByIdClient(client.getIdClient());
-
-		if (clientTemp.isEmpty()) {
-			clientRepository.save(client);
-			return (new ResponseMessage(Constants.CLIENT_CREATED));
-		} else {
-			return (new ResponseMessage(Constants.CLIENT_CREATE_FAIL));
-
-		}
+	public List<ClientDto> getAll() throws ClientException {
+		List<Client> clients = clientRepository.findAll();
+		return clientMapper.listClientToListClientDto(clients);
 	}
 
+	/*@Override
+	public ResponseMessage getById(Long idclient) throws ClientException {
+		// TODO Auto-generated method stub
+		return null;
+	}*/
+	
 	@Override
-	public ResponseMessage edit(ClientDto clientDto) {
-
-		Client client = clientMapper.clientDtoToClient(clientDto);
-		Optional<Client> clientTemp = clientRepository.findByIdClient(client.getIdClient());
+	public ResponseMessage create(ClientDto clientDto) throws ClientException{	
+		Optional<Client> clientTemp = clientRepository.findByIdClient(clientDto.getIdClient());
 
 		if (clientTemp.isPresent()) {
-			clientRepository.save(client);
-			return (new ResponseMessage(Constants.CLIENT_UPDATED));
-		} else
-			return (new ResponseMessage(Constants.CLIENT_UPDATED_FAIL));
-
+			return new ResponseMessage("El cliente con ID: " + clientDto.getIdClient() + " ya existe");
+		} else {
+			clientRepository.save(clientMapper.clientDtoToClient(clientDto));
+			return new ResponseMessage("Cliente creado con exito");
+		}
 	}
 
 	@Override
-	public ResponseMessage delete(Long idCLient){
-		Optional<Client> client = clientRepository.findByIdClient(idCLient);
+	public ResponseMessage edit(ClientDto clientDto) throws ClientException{
+		Optional<Client> clientTemp = clientRepository.findByIdClient(clientDto.getIdClient());
 
-		if (client.isEmpty()) {
-			return new ResponseMessage("Error: La cuenta con ID " + idCLient + ", no existe");
+		if (clientTemp.isPresent()) {
+			clientRepository.save(clientMapper.clientDtoToClient(clientDto));
+			return (new ResponseMessage("Cliente actualizado con exito"));
+		} else
+			return (new ResponseMessage("Error al actualizar cliente"));
+	}
+
+	@Override
+	public ResponseMessage delete(Long idCLient) throws ClientException{
+		Optional<Client> clientTemp = clientRepository.findByIdClient(idCLient);
+
+		if (clientTemp.isPresent()) {
+			clientRepository.deleteByIdClient(idCLient);
+			return (new ResponseMessage("Cliente eliminado con exito"));
+		}else {
+			return (new ResponseMessage("EL cliente con ID: " + idCLient + " no fue encontrado"));
 		}
-		
-		clientRepository.deleteByIdClient(idCLient);
-		return new ResponseMessage("Eliminación exitosa!");
 	}
 
 }
