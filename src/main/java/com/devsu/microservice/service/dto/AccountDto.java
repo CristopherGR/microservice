@@ -1,6 +1,5 @@
 package com.devsu.microservice.service.dto;
 
-import com.devsu.microservice.domain.Client;
 import com.devsu.microservice.domain.enums.AccountType;
 
 public class AccountDto {
