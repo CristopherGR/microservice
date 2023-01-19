@@ -11,4 +11,6 @@ import com.devsu.microservice.domain.Client;
 public interface ClientRepository extends JpaRepository<Client, Long>{
 
 	Optional <Client> findByIdClient(Long idClient);
+	
+	void deleteByIdClient(Long idClient);
 }

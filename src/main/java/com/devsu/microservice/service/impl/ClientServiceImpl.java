@@ -54,9 +54,15 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public ResponseMessage delete(ClientDto clientDto) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseMessage delete(Long idCLient){
+		Optional<Client> client = clientRepository.findByIdClient(idCLient);
+
+		if (client.isEmpty()) {
+			return new ResponseMessage("Error: La cuenta con ID " + idCLient + ", no existe");
+		}
+		
+		clientRepository.deleteByIdClient(idCLient);
+		return new ResponseMessage("Eliminación exitosa!");
 	}
 
 }
