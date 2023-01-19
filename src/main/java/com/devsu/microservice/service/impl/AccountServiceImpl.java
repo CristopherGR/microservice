@@ -21,7 +21,7 @@ public class AccountServiceImpl implements AccountService {
 
 	private AccountMapper accountMapper;
 
-	public AccountServiceImpl(AccountMapper accountMapper) {
+	public AccountServiceImpl() {
 		super();
 		this.accountMapper = new AccountMapper();
 	}
