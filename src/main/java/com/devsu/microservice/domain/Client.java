@@ -12,18 +12,29 @@ public class Client extends Person{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long clientId;
+	private Long idClient;
 	
 	private String password;
 	
 	private boolean state;
-
-	public Long getClientId() {
-		return clientId;
+	
+	public Client(Long idClient, String password, boolean state) {
+		super();
+		this.idClient = idClient;
+		this.password = password;
+		this.state = state;
+	}
+	
+	public Client() {
+		super();
 	}
 
-	public void setClientId(Long clientId) {
-		this.clientId = clientId;
+	public Long getIdClient() {
+		return idClient;
+	}
+
+	public void setIdClient(Long idClient) {
+		this.idClient = idClient;
 	}
 
 	public String getPassword() {

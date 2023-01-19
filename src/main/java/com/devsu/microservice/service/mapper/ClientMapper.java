@@ -15,6 +15,7 @@ public class ClientMapper {
 		client.setPhone(clientDto.getPhone());
 		client.setPassword(clientDto.getPassword());
 		client.setState(clientDto.isState());
+		client.setIdClient(clientDto.getIdClient());
 		
 		return client;		
 	}

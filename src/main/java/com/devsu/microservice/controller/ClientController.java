@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +23,15 @@ public class ClientController {
 	@Autowired
 	ClientService clientService;
 	
-	@PutMapping("/client/update/")
-	public ResponseEntity<ResponseMessage> update(@RequestBody ClientDto clientDto){
-		ResponseMessage responseMessage = clientService.update(clientDto);
+	@PostMapping("/client/create")
+	public ResponseEntity<ResponseMessage> create(@RequestBody ClientDto clientDto){
+		ResponseMessage responseMessage = clientService.create(clientDto);
+		return new ResponseEntity<>(responseMessage, new HttpHeaders(), HttpStatus.OK);
+	}
+	
+	@PutMapping("/client/edit")
+	public ResponseEntity<ResponseMessage> edit(@RequestBody ClientDto clientDto){
+		ResponseMessage responseMessage = clientService.edit(clientDto);
 		return new ResponseEntity<>(responseMessage, new HttpHeaders(), HttpStatus.OK);
 	}
 }
