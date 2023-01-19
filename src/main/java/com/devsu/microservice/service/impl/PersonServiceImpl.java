@@ -29,7 +29,7 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public ResponseMessage create(PersonDto personDto){
 		personRepository.save(personMapper.personDtoToPerson(personDto));
-		return (new ResponseMessage(Constants.PERSON_CREATE));
+		return (new ResponseMessage(Constants.PERSON_CREATED));
 	}
 	
 	
