@@ -10,5 +10,5 @@ import com.devsu.microservice.domain.Client;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long>{
 
-	Optional <Client> findByIdClient(Long id);
+	Optional <Client> findByIdClient(Long idClient);
 }

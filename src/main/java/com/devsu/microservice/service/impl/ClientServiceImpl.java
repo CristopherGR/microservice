@@ -19,30 +19,38 @@ public class ClientServiceImpl implements ClientService {
 	@Autowired
 	private ClientRepository clientRepository;
 	private ClientMapper clientMapper;
-	
+
 	public ClientServiceImpl() {
 		super();
 		this.clientMapper = new ClientMapper();
 	}
-	
+
 	@Override
 	public ResponseMessage create(ClientDto clientDto) {
 		Client client = clientMapper.clientDtoToClient(clientDto);
-		clientRepository.save(client); 
-		return (new ResponseMessage(Constants.CLIENT_CREATED));
+		Optional<Client> clientTemp = clientRepository.findByIdClient(client.getIdClient());
+
+		if (clientTemp.isEmpty()) {
+			clientRepository.save(client);
+			return (new ResponseMessage(Constants.CLIENT_CREATED));
+		} else {
+			return (new ResponseMessage(Constants.CLIENT_CREATE_FAIL));
+
+		}
 	}
 
 	@Override
-	public ResponseMessage update(ClientDto clientDto) {
+	public ResponseMessage edit(ClientDto clientDto) {
+
 		Client client = clientMapper.clientDtoToClient(clientDto);
-		Optional<Client> clientTemp = clientRepository.findByIdClient(client.getClientId());
-		
-		if(clientTemp.isPresent()) {
-			clientRepository.save(clientMapper.clientDtoToClient(clientDto));
+		Optional<Client> clientTemp = clientRepository.findByIdClient(client.getIdClient());
+
+		if (clientTemp.isPresent()) {
+			clientRepository.save(client);
 			return (new ResponseMessage(Constants.CLIENT_UPDATED));
-		}else 
+		} else
 			return (new ResponseMessage(Constants.CLIENT_UPDATED_FAIL));
-		
+
 	}
 
 	@Override
@@ -50,6 +58,5 @@ public class ClientServiceImpl implements ClientService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }

@@ -5,6 +5,6 @@ import com.devsu.microservice.utils.ResponseMessage;
 
 public interface ClientService {
 	public ResponseMessage create(ClientDto clientDto);
-	public ResponseMessage update(ClientDto clientDto);
-	public ResponseMessage delete(ClientDto clientDto);
+	public ResponseMessage edit(ClientDto clientDto);
+	public ResponseMessage delete(Long idClientDto);
 }

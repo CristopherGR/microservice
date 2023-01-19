@@ -1,14 +1,10 @@
 package com.devsu.microservice.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.MappedSuperclass;
 
-@Entity
-@Table(name = "person")
+@MappedSuperclass
 public class Person {
-
-	@Id		
+	
 	private String identification;
 	
 	private String name;
@@ -21,8 +17,18 @@ public class Person {
 	
 	private String phone;
 	
-	public Person() {
+	public Person(String identification, String name, String gender, Long age, String address, String phone) {
+		super();
+		this.identification = identification;
+		this.name = name;
+		this.gender = gender;
+		this.age = age;
+		this.address = address;
+		this.phone = phone;
+	}
 
+	public Person() {
+		super();
 	}
 
 	public String getIdentification() {
