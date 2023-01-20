@@ -38,6 +38,11 @@ public class MovementServiceImpl implements MovementService {
 		return (movementMapper.movementListToMovementDtoList(movementList));
 	}
 
+	/**
+	 * Este servicio primero valida si el tipo de movimiento es Debito o Credito, luego
+	 * suma el valor de todos los movimientos de esa cuenta mas el nuevo movimiento ingresado
+	 * y obtiene el saldo actual del cliente. Si el saldo es menor que cero se rechaza.
+	 */
 	@Override
 	public ResponseMessage create(MovementDto movementDto) throws AccountException {
 
