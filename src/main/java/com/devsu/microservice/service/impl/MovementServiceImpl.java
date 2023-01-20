@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.devsu.microservice.domain.Account;
 import com.devsu.microservice.domain.Movement;
 import com.devsu.microservice.exception.AccountException;
 import com.devsu.microservice.repository.MovementRepository;
