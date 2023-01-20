@@ -69,4 +69,13 @@ public class AccountServiceImpl implements AccountService {
 		}
 	}
 
+	@Override
+	public float getInitialAmountById(Long accountNumber) throws AccountException {
+		Optional<Account> account = accountRepository.findById(accountNumber);
+		if (account.isPresent())
+			return account.get().getInitialAmount();
+
+		return 0;
+	}
+
 }

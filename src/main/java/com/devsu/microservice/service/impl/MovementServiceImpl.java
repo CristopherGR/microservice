@@ -6,9 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.devsu.microservice.domain.Account;
 import com.devsu.microservice.domain.Movement;
 import com.devsu.microservice.exception.AccountException;
 import com.devsu.microservice.repository.MovementRepository;
+import com.devsu.microservice.service.AccountService;
 import com.devsu.microservice.service.MovementService;
 import com.devsu.microservice.service.dto.MovementDto;
 import com.devsu.microservice.service.mapper.MovementMapper;
@@ -19,6 +21,9 @@ public class MovementServiceImpl implements MovementService {
 
 	@Autowired
 	private MovementRepository movementRepository;
+	
+	@Autowired
+	private AccountService accountService;
 
 	private MovementMapper movementMapper;
 
@@ -35,14 +40,33 @@ public class MovementServiceImpl implements MovementService {
 
 	@Override
 	public ResponseMessage create(MovementDto movementDto) throws AccountException {
-		Optional<Movement> movementTemp = movementRepository.findByMovementId(movementDto.getMovementId());
 
-		if (movementTemp.isPresent()) {
-			return (new ResponseMessage("Movimiento con ID " + movementDto.getMovementId() + " ya existe"));
-		} else {
-			movementRepository.save(movementMapper.movementDtoToMovement(movementDto));
-			return (new ResponseMessage("Movimiento registrado con exito"));
+		if((!movementDto.getMovementType().equals("Credito")) && !(movementDto.getMovementType().equals("Debito"))) {
+			return (new ResponseMessage("Tipo de movimiento incorrecto"));
 		}
+		
+		List<Movement> movementList = movementRepository.getAllMovementsByAccount(movementDto.getAccount().getAccountNumber());
+		float totalAmount = accountService.getInitialAmountById(movementDto.getAccount().getAccountNumber());
+
+		for (Movement movement : movementList) {
+			if("Credito".equals(movement.getMovementType()))
+				totalAmount += movement.getValue();
+			else
+				totalAmount += (movement.getValue()*-1);
+		}
+		
+		if("Credito".equals(movementDto.getMovementType()))
+			totalAmount += movementDto.getValue();
+		else
+			totalAmount += (movementDto.getValue()*-1);
+				
+		if(totalAmount < 0)
+			return (new ResponseMessage("Saldo no disponible"));
+		
+		movementDto.setTotalAmount(totalAmount);
+		movementRepository.save(movementMapper.movementDtoToMovement(movementDto));
+		return (new ResponseMessage("Movimiento registrado con exito"));
+
 	}
 
 	@Override
