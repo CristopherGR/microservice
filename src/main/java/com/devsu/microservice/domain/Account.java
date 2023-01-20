@@ -1,8 +1,8 @@
 package com.devsu.microservice.domain;
 
-import com.devsu.microservice.domain.enums.AccountType;
-
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -11,56 +11,56 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "account")
 public class Account {
+	
 	@Id
-	private String accountNumber;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long accountNumber;
 	
-	private AccountType  accountType;
+	private String  accountType;
 	
-	private float  openingBalance;
+	private float  initialAmount;
 	
 	private boolean state;
 
 	@ManyToOne
-	@JoinColumn(name = "clientId")
+	@JoinColumn(name = "idClient")
 	private Client client;
 	
-	
-
 	public Account() {
 		super();
 	}
-
-	public Account(String accountNumber, AccountType accountType, float openingBalance, boolean state, Client client) {
+	
+	public Account(Long accountNumber, String accountType, float openingBalance, boolean state, Client client) {
 		super();
 		this.accountNumber = accountNumber;
 		this.accountType = accountType;
-		this.openingBalance = openingBalance;
+		this.initialAmount = openingBalance;
 		this.state = state;
 		this.client = client;
 	}
 
-	public String getAccountNumber() {
+	public Long getAccountNumber() {
 		return accountNumber;
 	}
 
-	public void setAccountNumber(String accountNumber) {
+	public void setAccountNumber(Long accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 
-	public AccountType getAccountType() {
+	public String getAccountType() {
 		return accountType;
 	}
 
-	public void setAccountType(AccountType accountType) {
+	public void setAccountType(String accountType) {
 		this.accountType = accountType;
 	}
 
-	public float getOpeningBalance() {
-		return openingBalance;
+	public float getInitialAmount() {
+		return initialAmount;
 	}
 
-	public void setOpeningBalance(float openingBalance) {
-		this.openingBalance = openingBalance;
+	public void setInitialAmount(float initialAmount) {
+		this.initialAmount = initialAmount;
 	}
 
 	public boolean isState() {

@@ -1,13 +1,12 @@
 package com.devsu.microservice.service.dto;
 
-import com.devsu.microservice.domain.enums.AccountType;
 
 public class AccountDto {
-	private String accountNumber;
+	private Long accountNumber;
 
-	private AccountType accountType;
+	private String accountType;
 
-	private float openingBalance;
+	private float initialAmount;
 
 	private boolean state;
 
@@ -17,12 +16,12 @@ public class AccountDto {
 		super();
 	}
 
-	public AccountDto(String accountNumber, AccountType accountType, float openingBalance, boolean state,
+	public AccountDto(Long accountNumber, String accountType, float initialAmount, boolean state,
 			ClientDto client) {
 		super();
 		this.accountNumber = accountNumber;
 		this.accountType = accountType;
-		this.openingBalance = openingBalance;
+		this.initialAmount = initialAmount;
 		this.state = state;
 		this.client = client;
 	}
@@ -35,28 +34,28 @@ public class AccountDto {
 		this.client = client;
 	}
 
-	public String getAccountNumber() {
+	public Long getAccountNumber() {
 		return accountNumber;
 	}
 
-	public void setAccountNumber(String accountNumber) {
+	public void setAccountNumber(Long accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 
-	public AccountType getAccountType() {
+	public String getAccountType() {
 		return accountType;
 	}
 
-	public void setAccountType(AccountType accountType) {
+	public void setAccountType(String accountType) {
 		this.accountType = accountType;
 	}
 
-	public float getOpeningBalance() {
-		return openingBalance;
+	public float getInitialAmount() {
+		return initialAmount;
 	}
 
-	public void setOpeningBalance(float openingBalance) {
-		this.openingBalance = openingBalance;
+	public void setInitialAmount(float initialAmount) {
+		this.initialAmount = initialAmount;
 	}
 
 	public boolean isState() {

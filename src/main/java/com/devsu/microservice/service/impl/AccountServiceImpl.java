@@ -1,5 +1,6 @@
 package com.devsu.microservice.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,39 +28,45 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
+	public List<AccountDto> getAll() throws AccountException {
+		List<Account> accountList = accountRepository.findAll();
+		return accountMapper.accountListToAccountDtoList(accountList);
+	}
+
+	@Override
 	public ResponseMessage create(AccountDto accountDto) throws AccountException {
-		Optional<Account> findAccountById = accountRepository.findByAccountNumber(accountDto.getAccountNumber());
+		Optional<Account> accountTemp = accountRepository.findByAccountNumber(accountDto.getAccountNumber());
 
-		if (findAccountById.isPresent()) {
-			return new ResponseMessage("Error: La cuenta con ID " + accountDto.getAccountNumber() + ", ya existe");
+		if (accountTemp.isPresent()) {
+			return (new ResponseMessage("La cuenta con ID " + accountDto.getAccountNumber() + ", ya existe"));
+		} else {
+			accountRepository.save(accountMapper.accountDtoToAccount(accountDto));
+			return (new ResponseMessage("Cuenta creada con exito"));
 		}
-
-		accountRepository.save(accountMapper.accountDtoToAccount(accountDto));
-		return new ResponseMessage("Registro exitoso!");
 	}
 
 	@Override
 	public ResponseMessage edit(AccountDto accountDto) throws AccountException {
-		Optional<Account> findAccountById = accountRepository.findByAccountNumber(accountDto.getAccountNumber());
+		Optional<Account> accountTemp = accountRepository.findByAccountNumber(accountDto.getAccountNumber());
 
-		if (findAccountById.isEmpty()) {
-			return new ResponseMessage("Error: La cuenta con ID " + accountDto.getAccountNumber() + ", no existe");
+		if (accountTemp.isPresent()) {
+			accountRepository.save(accountMapper.accountDtoToAccount(accountDto));
+			return (new ResponseMessage("Cuenta actualizada con exito"));
+		} else {
+			return (new ResponseMessage("Error al actuaizar la cuenta"));
 		}
-
-		accountRepository.save(accountMapper.accountDtoToAccount(accountDto));
-		return new ResponseMessage("Actualización exitosa!");
 	}
 
 	@Override
-	public ResponseMessage delete(String accountNumber) throws AccountException {
-		Optional<Account> findAccountById = accountRepository.findByAccountNumber(accountNumber);
+	public ResponseMessage delete(Long accountNumber) throws AccountException {
+		Optional<Account> accountTemp = accountRepository.findByAccountNumber(accountNumber);
 
-		if (findAccountById.isEmpty()) {
-			return new ResponseMessage("Error: La cuenta con ID " + accountNumber + ", no existe");
+		if (accountTemp.isPresent()) {
+			accountRepository.deleteByAccountNumber(accountNumber);
+			return (new ResponseMessage("Cuenta eliminada con exito"));
+		} else {
+			return (new ResponseMessage("El cliente con ID: " + accountNumber + " no fue encontrado"));
 		}
-		
-		accountRepository.delete(findAccountById.get());
-		return new ResponseMessage("Eliminación exitosa!");
 	}
 
 }

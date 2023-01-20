@@ -15,6 +15,7 @@ public class ClientMapper {
 		}
 
 		Client client = new Client();
+		client.setIdClient(clientDto.getIdClient());
 		client.setIdentification(clientDto.getIdentification());
 		client.setName(clientDto.getName());
 		client.setGender(clientDto.getGender());
@@ -23,7 +24,6 @@ public class ClientMapper {
 		client.setPhone(clientDto.getPhone());
 		client.setPassword(clientDto.getPassword());
 		client.setState(clientDto.isState());
-		client.setIdClient(clientDto.getIdClient());
 		return client;
 	}
 
@@ -34,6 +34,7 @@ public class ClientMapper {
 		}
 
 		ClientDto clientDto = new ClientDto();
+		clientDto.setIdClient(client.getIdClient());
 		clientDto.setIdentification(client.getIdentification());
 		clientDto.setName(client.getName());
 		clientDto.setGender(client.getGender());
@@ -44,7 +45,12 @@ public class ClientMapper {
 		clientDto.setState(client.isState());
 		return clientDto;
 	}
-
+	
+	/**
+	 * se vuelve a usar la funcion clientToClientDto() 
+	 * para no volver a escribir la mismas linea de codigo 
+	 * dentro del for, luego se usa directamente listClientDto.add()
+	 */
 	public List<ClientDto> listClientToListClientDto(List<Client> listClient) {
 
 		if (listClient.isEmpty()) {
@@ -53,19 +59,11 @@ public class ClientMapper {
 		
 		List<ClientDto> listClientDto = new ArrayList<>();
 		
+
 		for(Client client : listClient) {
-			ClientDto clientDto = new ClientDto();
-			clientDto.setIdClient(client.getIdClient());
-			clientDto.setIdentification(client.getIdentification());
-			clientDto.setName(client.getName());
-			clientDto.setGender(client.getGender());
-			clientDto.setAge(client.getAge());
-			clientDto.setAddress(client.getAddress());
-			clientDto.setPhone(client.getPhone());
-			clientDto.setPassword(client.getPassword());
-			clientDto.setState(client.isState());
-			listClientDto.add(clientDto);
+			listClientDto.add(clientToClientDto(client));
 		}	
+		
 		return listClientDto;
 	}
 }

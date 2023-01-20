@@ -35,18 +35,17 @@ public class ClientController {
 	public ResponseEntity<List<ClientDto>> getAll() {
 		try {
 			List<ClientDto> listClientDto = clientService.getAll();
-			return new ResponseEntity<>(listClientDto, new HttpHeaders(), HttpStatus.CREATED);
+			return new ResponseEntity<>(listClientDto, new HttpHeaders(), HttpStatus.OK);
 		} catch (ClientException e) {
-			return new ResponseEntity<>(null, new HttpHeaders(),
+			return new ResponseEntity<>(new HttpHeaders(),
 					HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@PostMapping("/clientes/crear")
 	public ResponseEntity<ResponseMessage> create(@RequestBody ClientDto clientDto) {
-		ResponseMessage responseMessage;
 		try {
-			responseMessage = clientService.create(clientDto);
+			ResponseMessage responseMessage = clientService.create(clientDto);
 			return new ResponseEntity<>(responseMessage, new HttpHeaders(), HttpStatus.CREATED);
 		} catch (ClientException e) {
 			return new ResponseEntity<>(new ResponseMessage("Error: " + e.getMessage()), new HttpHeaders(),

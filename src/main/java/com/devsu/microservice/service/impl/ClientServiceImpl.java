@@ -31,12 +31,6 @@ public class ClientServiceImpl implements ClientService {
 		List<Client> clients = clientRepository.findAll();
 		return clientMapper.listClientToListClientDto(clients);
 	}
-
-	/*@Override
-	public ResponseMessage getById(Long idclient) throws ClientException {
-		// TODO Auto-generated method stub
-		return null;
-	}*/
 	
 	@Override
 	public ResponseMessage create(ClientDto clientDto) throws ClientException{	
