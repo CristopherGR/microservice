@@ -21,10 +21,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.devsu.microservice.service.AccountService;
 import com.devsu.microservice.service.MovementService;
 import com.devsu.microservice.service.dto.AccountDto;
-import com.devsu.microservice.service.dto.ClientDto;
 import com.devsu.microservice.service.dto.MovementDto;
 import com.devsu.microservice.utils.ResponseMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
