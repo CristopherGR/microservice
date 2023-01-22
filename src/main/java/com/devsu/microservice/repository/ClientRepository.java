@@ -13,4 +13,6 @@ public interface ClientRepository extends JpaRepository<Client, Long>{
 	Optional <Client> findByIdClient(Long idClient);
 	
 	void deleteByIdClient(Long idClient);
+	
+	Optional <Client> findByIdentification(String identification);
 }

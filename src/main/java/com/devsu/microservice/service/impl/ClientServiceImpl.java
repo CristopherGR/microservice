@@ -33,6 +33,24 @@ public class ClientServiceImpl implements ClientService {
 	}
 	
 	@Override
+	public ClientDto getById(Long idClient) throws ClientException {
+		Optional<Client> client = clientRepository.findById(idClient);
+		if(client.isPresent())
+			return clientMapper.clientToClientDto(client.get());
+	
+		return null;
+	}
+	
+	@Override
+	public ClientDto findByIdentification(String identification) throws ClientException {
+		Optional<Client> client = clientRepository.findByIdentification(identification);
+		if(client.isPresent())
+			return clientMapper.clientToClientDto(client.get());
+	
+		return null;
+	}
+	
+	@Override
 	public ResponseMessage create(ClientDto clientDto) throws ClientException{	
 		Optional<Client> clientTemp = clientRepository.findByIdClient(clientDto.getIdClient());
 

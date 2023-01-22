@@ -34,6 +34,15 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
+	public AccountDto getById(Long accountNumber) throws AccountException {
+		Optional<Account> account = accountRepository.findById(accountNumber);
+		if(account.isPresent())
+			return accountMapper.accountToAccountDto(account.get());
+	
+		return null;
+	}
+	
+	@Override
 	public ResponseMessage create(AccountDto accountDto) throws AccountException {
 		Optional<Account> accountTemp = accountRepository.findByAccountNumber(accountDto.getAccountNumber());
 

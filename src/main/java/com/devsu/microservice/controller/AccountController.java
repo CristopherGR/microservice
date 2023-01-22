@@ -41,6 +41,16 @@ public class AccountController {
 		}
 	}
 
+	@GetMapping("/cuentas/{id}")
+	public ResponseEntity<AccountDto> getById(@PathVariable("id") Long accountNumber) {
+		try {
+			AccountDto accountDto = accountService.getById(accountNumber);
+			return new ResponseEntity<>(accountDto, new HttpHeaders(), HttpStatus.OK);
+		} catch (AccountException e) {
+			return new ResponseEntity<>(new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		}
+	}
+
 	@PostMapping("/cuentas/crear")
 	public ResponseEntity<ResponseMessage> create(@RequestBody AccountDto accountDto) {
 		try {

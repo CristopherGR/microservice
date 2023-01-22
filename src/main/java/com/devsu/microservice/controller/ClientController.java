@@ -41,6 +41,29 @@ public class ClientController {
 					HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@GetMapping("/clientes/{id}")
+	public ResponseEntity<ClientDto> getById(@PathVariable("id") Long idClient) {
+		try {
+			ClientDto clientDto = clientService.getById(idClient);
+			return new ResponseEntity<>(clientDto, new HttpHeaders(), HttpStatus.OK);
+		} catch (ClientException e) {
+			return new ResponseEntity<>(new HttpHeaders(),
+					HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/clientes/identification/{identification}")
+	public ResponseEntity<ClientDto> getByIdentification(@PathVariable("identification") String identification) {
+		try {
+			ClientDto clientDto = clientService.findByIdentification(identification);
+			return new ResponseEntity<>(clientDto, new HttpHeaders(), HttpStatus.OK);
+		} catch (ClientException e) {
+			return new ResponseEntity<>(new HttpHeaders(),
+					HttpStatus.BAD_REQUEST);
+		}
+	}
+
 
 	@PostMapping("/clientes/crear")
 	public ResponseEntity<ResponseMessage> create(@RequestBody ClientDto clientDto) {

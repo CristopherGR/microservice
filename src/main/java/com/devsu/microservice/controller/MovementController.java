@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devsu.microservice.exception.MovementException;
 import com.devsu.microservice.service.MovementService;
 import com.devsu.microservice.service.dto.MovementDto;
 import com.devsu.microservice.utils.ResponseMessage;
@@ -37,6 +38,17 @@ public class MovementController {
 			return new ResponseEntity<>(movementDtoList, new HttpHeaders(), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/movimientos/{id}")
+	public ResponseEntity<MovementDto> getById(@PathVariable("id") Long movementId){
+		try {
+			MovementDto movementDto = movementService.getById(movementId);
+			return new ResponseEntity<>(movementDto, new HttpHeaders(), HttpStatus.OK);
+		} catch (MovementException e) {
+			return new ResponseEntity<>(new HttpHeaders(),
+					HttpStatus.BAD_REQUEST);
 		}
 	}
 

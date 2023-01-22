@@ -10,6 +10,8 @@ public interface AccountService {
 	
 	public List<AccountDto> getAll() throws AccountException;
 	
+	public AccountDto getById(Long accountNumber) throws AccountException;
+	
 	public float getInitialAmountById(Long accountNumber) throws AccountException;
 	
 	public ResponseMessage create(AccountDto accountDto) throws AccountException;

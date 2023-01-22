@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.devsu.microservice.domain.Movement;
 import com.devsu.microservice.exception.AccountException;
+import com.devsu.microservice.exception.MovementException;
 import com.devsu.microservice.repository.MovementRepository;
 import com.devsu.microservice.service.AccountService;
 import com.devsu.microservice.service.MovementService;
@@ -32,18 +33,28 @@ public class MovementServiceImpl implements MovementService {
 	}
 
 	@Override
-	public List<MovementDto> getAll() throws AccountException {
+	public List<MovementDto> getAll() throws MovementException {
 		List<Movement> movementList = movementRepository.findAll();
 		return (movementMapper.movementListToMovementDtoList(movementList));
 	}
 
+	@Override
+	public MovementDto getById(Long movementId) throws MovementException {
+		Optional<Movement> movement = movementRepository.findById(movementId);
+		if(movement.isPresent())
+			return movementMapper.movementToMovementDto(movement.get());
+	
+		return null;
+	}
+	
 	/**
 	 * Este servicio primero valida si el tipo de movimiento es Debito o Credito, luego
 	 * suma el valor de todos los movimientos de esa cuenta mas el nuevo movimiento ingresado
 	 * y obtiene el saldo actual del cliente. Si el saldo es menor que cero se rechaza.
+	 * @throws AccountException 
 	 */
 	@Override
-	public ResponseMessage create(MovementDto movementDto) throws AccountException {
+	public ResponseMessage create(MovementDto movementDto) throws MovementException, AccountException {
 
 		if((!movementDto.getMovementType().equals("Credito")) && !(movementDto.getMovementType().equals("Debito"))) {
 			return (new ResponseMessage("Tipo de movimiento incorrecto"));
@@ -70,11 +81,10 @@ public class MovementServiceImpl implements MovementService {
 		movementDto.setTotalAmount(totalAmount);
 		movementRepository.save(movementMapper.movementDtoToMovement(movementDto));
 		return (new ResponseMessage("Movimiento registrado con exito"));
-
 	}
 
 	@Override
-	public ResponseMessage edit(MovementDto movementDto) throws AccountException {
+	public ResponseMessage edit(MovementDto movementDto) throws MovementException {
 		Optional<Movement> movementTemp = movementRepository.findByMovementId(movementDto.getMovementId());
 
 		if (movementTemp.isPresent()) {
@@ -86,7 +96,7 @@ public class MovementServiceImpl implements MovementService {
 	}
 
 	@Override
-	public ResponseMessage delete(Long movementId) throws AccountException {
+	public ResponseMessage delete(Long movementId) throws MovementException {
 		Optional<Movement> movementTemp = movementRepository.findByMovementId(movementId);
 
 		if (movementTemp.isPresent()) {

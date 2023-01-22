@@ -13,4 +13,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 	Optional<Account> findByAccountNumber(Long accountNumber);
 
 	void deleteByAccountNumber(Long accountNumber);
+	
 }
